@@ -1,0 +1,6 @@
+export const FETCH_USERS_PENDING = 'user/FETCH_USERS_PENDING';
+export const FETCH_USERS_FULLFILL = 'user/FETCH_USERS_FULLFILL';
+export const FETCH_USERS_REJECTED = 'user/FETCH_USERS_REJECTED';
+
+
+export const SELECT_USER = 'user/SELECT_USER'
