@@ -11,15 +11,13 @@ class List extends Component {
         this.props.dispatch(actionSelectUser(id))
     }
     renderTable = () => {
-        const { users, isLoading, error } = this.props;
-        if (isLoading) {
-            return <div class="spinner-border " style={{position:"absolute",left:"50%",marginTop:"20px"}} role="status">
-                <span class="visually-hidden ">Loading...</span>
-            </div>
-        }
-        if (error) {
-            return <h2 >{error}</h2>
-        }
+        const { isLoading, users, error } = this.props;
+        if (isLoading) return <div class="spinner-border" role="status" style={{ position: "absolute", left: "50%", marginTop: 20 }}>
+            <span class="visually-hidden">Loading...</span>
+        </div>
+        if (error) return <div>
+            <h3 className='text-center'>{error}</h3>
+        </div>
         return users.map(item =>
             <tr key={item.id}>
                 <td>{item.idStudent}</td>
@@ -29,19 +27,20 @@ class List extends Component {
                 <td>
                     <button
                         onClick={() => this.handleSelect(item.id)}
-                        className="btn btn-primary">Chỉnh sửa</button>
+                        className="btn btn-primary me-2">Chỉnh sửa</button>
                     <button
                         onClick={() => this.handleDelete(item.id)}
-                        className="btn btn-danger ms-2">Xóa</button>
+                        className="btn btn-danger">Xóa</button>
                 </td>
             </tr>
         )
     }
+
     render() {
         return (
             <div>
                 <table className="table">
-                    <thead>
+                    <thead className='bg-dark text-light'>
                         <tr>
                             <th>Mã</th>
                             <th>Họ tên</th>

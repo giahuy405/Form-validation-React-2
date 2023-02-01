@@ -12,22 +12,30 @@ export const actionFetchUser = () => {
     // getState : hàm dùng để lấy state từ store
     return async (dispatch, getState) => {
         try {
+            // TRƯỜNG HỢP 1 : PENDING 
             dispatch({
                 type: actionTypes.FETCH_USERS_PENDING
             })
+            const {searchTerm} = getState().userReducer;
+            console.log(getState().userReducer);
             const res = await axios({
                 method: "GET",
                 url: "https://63c63b30dcdc478e15bd64d9.mockapi.io/student",
+                params: {
+                    idStudent: searchTerm || undefined
+                }
             })
+            // TRƯỜNG HỢP 2 : FULL FILL
             dispatch({
                 type: actionTypes.FETCH_USERS_FULLFILL,
                 payload: res.data
             })
         } catch (err) {
+            // TRƯỜNG HỢP 3 : R
             dispatch({
-                type:actionTypes.FETCH_USERS_REJECTED,
+                type: actionTypes.FETCH_USERS_REJECTED,
                 // lỗi      server          || syntax 
-                payload : err.response.data || err.message
+                payload: err.response.data || err.message
             })
             console.log(err)
         }
@@ -96,5 +104,15 @@ export const actionUpdateUser = (payload, id) => {
         } catch (err) {
             console.log(err)
         }
+    }
+}
+
+export const actionSearchUser = payload => {
+    return (dispatch) => {
+        dispatch({
+            type:actionTypes.SEARCH_TERM,
+            payload
+        })
+        dispatch(actionFetchUser())
     }
 }
